@@ -1,0 +1,17 @@
+{
+    "name": "shawn/easy_yingshi_camera",
+    "description": "yingshi camera sdk for laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shawn",
+            "email": "shawnzhang31@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Shawn\\YSCamera\\": "src/"
+        }
+    }
+}
