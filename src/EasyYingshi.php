@@ -9,15 +9,37 @@
 namespace Shawn\YSCamera;
 
 
+use Illuminate\Config\Repository;
+
 class EasyYingshi
 {
+
+    /**
+     * @var appkey
+     */
+    public $appKey;
+    /**
+     * @var appSecret;
+     */
+    public $appSecret;
+
+
+    /**
+     * EasyYingshi constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
     /**
      * 获取用户的accessToken
      * @return mixed
      */
     public function getAccessToken()
     {
-        $data=array('appKey'=>env('YS_APP_KEY',''),'appSecret'=>env('YS_APP_Secret',''),);
+
+        $data=array('appKey'=>env('YS_APP_KEY',''),'appSecret'=>env('YS_APP_Secret',''));
         //初始化curl;
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://open.ys7.com/api/lapp/token/get");//这是请求地址
@@ -131,7 +153,7 @@ class EasyYingshi
      * @param $channelNo,	通道号，IPC设备填写1
      * @return mixed|string
      */
-    public function deviceCapture($deviceSerial,$channelNo)
+    public function deviceCapture($deviceSerial,$channelNo=1)
     {
         //获取accesstoken
         $accessRespone=json_decode($this->getAccessToken());
@@ -263,7 +285,7 @@ class EasyYingshi
     }
 
     /**
-     * deviceSerial
+     * 获取指定设备的信息
      * @param $deviceSerial:设备序列号
      * @return mixed|string
      */
@@ -399,7 +421,7 @@ class EasyYingshi
      * @param $expireTime:地址过期时间：单位秒数，最大默认2592000（即30天），最小默认300（即5分钟）
      * @return mixed|string
      */
-    public function liveAddressLimited($deviceSerial,$channelNo,$expireTime=300)
+    public function liveAddressLimited($deviceSerial,$channelNo=1,$expireTime=300)
     {
         //获取accesstoken
         $accessRespone=json_decode($this->getAccessToken());
@@ -413,7 +435,7 @@ class EasyYingshi
         //设置放回请求结果
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         //请求地址
-        curl_setopt($ch,CURLOPT_URL,'https://open.ys7.com/api/lapp/live/video/list');
+        curl_setopt($ch,CURLOPT_URL,'https://open.ys7.com/api/lapp/live/address/limited');
         //POST请求
         curl_setopt($ch,CURLOPT_POST,1);
         //提交数据
@@ -455,5 +477,12 @@ class EasyYingshi
         curl_close($ch);
         return $respone;
     }
+
+    public function render()
+    {
+
+    }
+
+
 
 }
